@@ -42,7 +42,7 @@
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.ContextActions>
-                                <MenuItem Text="=Remover"/>
+                                <MenuItem Text="=Remover" Clicked="MenuItem_Clicked|_Remover" />
                             </ViewCell.ContextActions>
                             <Grid RowDefinitions="Auto"
                                   ColumnDefinitions="*,Auto, Auto">
