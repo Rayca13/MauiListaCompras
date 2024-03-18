@@ -47,6 +47,16 @@ namespace MauiListaCompras
         {
 
         }
+
+        private void txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void ref_carregando_Refreshing(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }
