@@ -14,8 +14,8 @@
 
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Somar"/>
-        <ToolbarItem Text="Adicionar"/>
+        <ToolbarItem Text="Somar" Clicked="ToolbarItem_Clicked_Somar"/>
+        <ToolbarItem Text="Adicionar" Clicked="ToolbarItem_Clicked_Add"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
