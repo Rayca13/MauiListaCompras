@@ -69,9 +69,30 @@ namespace MauiListaCompras
                     lista_produtos.Add(p);
                 }
             });
+            ref_carregando.IsRefreshing = false;
         }
 
-        private void MenuItem_Clicked(object sender, EventArgs e)
+        private async void MenuItem_Clicked_Remover(object sender, EventArgs e)
+        {
+            try
+            {
+                MenuItem selecionado = (MenuItem)sender;
+                Produto p = selecionado.BindingContext as Produto;
+
+                bool confirm = await DisplayAlert("Tem certeza?", "Remover produto", "Sim", "Cancelar");
+
+                if (confirm)
+                {
+                    await App.Db.Delete(p.Id);
+                    await DisplayAlert("Sucesso!","Produto Removindo","Ok");
+                }
+            }   catch (Exception ex) 
+                {
+                await DisplayAlert("Ops", ex.Message,"OK");
+                }
+        }
+
+        private void lst_produtos_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
 
         }
