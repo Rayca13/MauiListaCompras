@@ -15,26 +15,24 @@ namespace MauiListaCompras
         }
 
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
+        protected async override void OnAppearing()
+        {           
 
             if (lista_produtos.Count == 0)
-            {
-                Task.Run(async () =>
+            {           
                 {
                     List<Produto> tmp = await App.Db.GetAll();
                     foreach (Produto p in tmp)
                     {
                         lista_produtos.Add(p);
                     }
-                });
+                };
             }
         }
 
         private async void ToolbarItem_Clicked_Add(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//NovoProduto");
+            await Navigation.PushAsync(new Views.NovoProduto2());
         }
 
         private void ToolbarItem_Clicked_Somar(object sender, EventArgs e)
@@ -44,18 +42,18 @@ namespace MauiListaCompras
             DisplayAlert("somatória", msg, "Fechar");
         }
 
-        private void txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        private async void txt_search_TextChanged(object sender, TextChangedEventArgs e)
         {
             string q = e.NewTextValue;
-            lista_produtos.Clear();
-            Task.Run(async () => 
+            lista_produtos.Clear(); 
+                
             {
                 List<Produto> tmp = await App.Db.Search(q);
                 foreach (Produto p in tmp)
                 {
                     lista_produtos.Add(p);
                 }
-            });    
+            };    
         }
 
         private void ref_carregando_Refreshing(object sender, EventArgs e)
@@ -85,6 +83,8 @@ namespace MauiListaCompras
                 {
                     await App.Db.Delete(p.Id);
                     await DisplayAlert("Sucesso!","Produto Removindo","Ok");
+                    lista_produtos.Remove(p);
+
                 }
             }   catch (Exception ex) 
                 {
@@ -94,7 +94,12 @@ namespace MauiListaCompras
 
         private void lst_produtos_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            Produto? p = e.SelectedItem as Produto;
 
+            Navigation.PushAsync(new Views.EditarProduto
+            {
+                BindingContext = p,
+            });
         }
     }
 
